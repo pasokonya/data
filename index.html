@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PREMIUM LINK by パソコンや</title>
+    <title>パソコンや</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,31 +13,6 @@
         h1 {
             text-align: center;
             margin: 20px;
-        }
-        #filter-container {
-            margin: 20px;
-            text-align: center;
-        }
-        .filter-input {
-            padding: 8px;
-            width: 90%;
-            max-width: 300px;
-            margin: 5px 0;
-        }
-        #clear-filters {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-        }
-        #clear-filters:hover {
-            background-color: #0056b3;
         }
         table {
             width: 100%;
@@ -67,10 +42,6 @@
                 font-size: 14px;
                 padding: 6px;
             }
-            .filter-input {
-                width: 100%;
-                max-width: none;
-            }
         }
         #error-message {
             color: red;
@@ -80,24 +51,29 @@
     </style>
 </head>
 <body>
-    <h1>PREMIUM LINK</h1>
-    <div id="filter-container">
-        <label for="field-filter">分野で検索:</label>
-        <input type="text" id="field-filter" class="filter-input" placeholder="分野を入力">
-        <label for="address-filter">住所で検索:</label>
-        <input type="text" id="address-filter" class="filter-input" placeholder="住所を入力">
-        <button id="clear-filters">フィルタをクリア</button>
-    </div>
+    <h1>パソコンや</h1>
     <div style="overflow-x: auto;">
         <table id="data-table">
             <thead>
                 <tr>
+                    <th>掲載</th>
                     <th>No</th>
-                    <th>LitLink</th>
-                    <th>分野</th>
-                    <th>氏名</th>
-                    <th>会社名</th>
-                    <th>住所</th>
+                    <th>おすすめ</th>
+                    <th>価格</th>
+                    <th>総合</th>
+                    <th>保証</th>
+                    <th>メーカー</th>
+                    <th>型番</th>
+                    <th>CPU</th>
+                    <th>メモリ</th>
+                    <th>ストレージ</th>
+                    <th>ドライブ</th>
+                    <th>ディスプレイ(サイズ)</th>
+                    <th>ディスプレイ(解像度)</th>
+                    <th>OS</th>
+                    <th>付属品</th>
+                    <th>備考</th>
+                    <th>その他/状態</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -106,8 +82,6 @@
     <div id="error-message"></div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const fieldFilterInput = document.getElementById('field-filter');
-            const addressFilterInput = document.getElementById('address-filter');
             const tableBody = document.querySelector('#data-table tbody');
             const errorMessageDiv = document.getElementById('error-message');
             let dataRows = [];
@@ -145,7 +119,6 @@
                 rows.forEach(row => {
                     const tr = document.createElement('tr');
                     Object.keys(row).forEach((key) => {
-                        if (key === '掲載') return; // "掲載" 列は表示しない
                         const td = document.createElement('td');
                         if (key === 'LitLink' && row[key].trim()) {
                             const a = document.createElement('a');
@@ -161,27 +134,6 @@
                     tableBody.appendChild(tr);
                 });
             };
-
-            const filterTable = () => {
-                const fieldFilterValue = fieldFilterInput.value.toLowerCase();
-                const addressFilterValue = addressFilterInput.value.toLowerCase();
-                const filteredRows = dataRows.filter(row => {
-                    return row['分野'] && row['分野'].toLowerCase().includes(fieldFilterValue) &&
-                           row['住所'] && row['住所'].toLowerCase().includes(addressFilterValue);
-                });
-                renderTableRows(filteredRows);
-            };
-
-            fieldFilterInput.addEventListener('input', filterTable);
-            addressFilterInput.addEventListener('input', filterTable);
-
-            // フィルタクリアボタンのイベントリスナーを追加
-            document.getElementById('clear-filters').addEventListener('click', () => {
-                fieldFilterInput.value = '';
-                addressFilterInput.value = '';
-                // フィルタリングを解除して全データを再表示
-                renderTableRows(dataRows);
-            });
 
             const dataUrl = 'data.csv'; // データファイルのURLを指定
             fetchData(dataUrl);
