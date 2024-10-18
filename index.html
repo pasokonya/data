@@ -152,13 +152,15 @@
                 tableBody.innerHTML = ''; // テーブルの内容をリセット
                 rows.forEach(row => {
                     const tr = document.createElement('tr');
+                    // 価格の表示に(税込)を追加
+                    const priceWithTax = `${row['価格']} (税込)`;
                     tr.innerHTML = `
                         <td>${row['No']}</td>
                         <td><a href="detail.html?no=${row['No']}">詳細</a></td>
                         <td>${row['おすすめ']}</td>
                         <td>${row['総合']}</td>
                         <td>${row['画面']}</td>
-                        <td>${row['価格']}</td>
+                        <td>${priceWithTax}</td> <!-- 修正した部分 -->
                         <td>${row['メーカー']}</td>
                         <td>${row['型番']}</td>
                         <td>${row['CPU']}</td>

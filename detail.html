@@ -59,6 +59,12 @@
             display: block; /* ブロック要素に */
             margin-top: 10px; /* 上のマージン */
         }
+        /* 送料情報のスタイル */
+        .shipping-info {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -67,8 +73,16 @@
         <div id="details" class="item-detail"></div>
         <div class="price" id="item-price"></div> <!-- 価格を表示するためのdiv -->
         <a class="contact-link" href="https://lit.link/pasokonya" target="_blank">お問い合わせ： https://lit.link/pasokonya</a> <!-- お問い合わせのリンク -->
-        <a id="back-button" href="index.html">戻る</a>
+
+        <div class="shipping-info">
+            <h2>■送料</h2>
+            <p>全国一律：ノートPC ¥1,500 (1台まで)</p>
+            <p>全国一律：デスクトップPC ¥3,000 (1台まで)</p>
+        </div>
+
+        <a id="back-button" href="index.html">戻る</a> <!-- 戻るボタンを一番下に配置 -->
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -76,11 +90,11 @@
             const itemNo = urlParams.get('no');
             const detailsDiv = document.getElementById('details');
             const itemNoHeader = document.getElementById('item-no');
-            const itemPriceDiv = document.getElementById('item-price'); // 価格を表示する要素
+            const itemPriceDiv = document.getElementById('item-price');
 
             const fetchData = async (url) => {
                 try {
-                    const response = await fetch(url, { cache: "no-store" }); // キャッシュを無効にするオプションを追加
+                    const response = await fetch(url, { cache: "no-store" });
                     if (!response.ok) {
                         throw new Error('ネットワーク応答に問題があります: ' + response.statusText);
                     }
@@ -94,7 +108,10 @@
                             if (item) {
                                 itemNoHeader.textContent = item['No']; // Noを動的に表示
                                 displayItemDetails(item);
-                                itemPriceDiv.textContent = `価格: ¥${item['価格']}`; // 価格を表示
+
+                                // 価格に(税込)を追加
+                                const price = item['価格'].replace('\\', '¥');
+                                itemPriceDiv.textContent = `価格: ${price} (税込)`; // 修正した部分
                             } else {
                                 detailsDiv.innerHTML = '<p>該当するアイテムが見つかりません。</p>';
                             }
@@ -111,7 +128,6 @@
 
             const displayItemDetails = (item) => {
                 for (const key in item) {
-                    // "掲載", "No", "おすすめ", "価格" 以外の項目を表示
                     if (key !== '掲載' && key !== 'No' && key !== 'おすすめ' && key !== '価格') {
                         const detailDiv = document.createElement('div');
                         if (key === '画像リンク' && item[key]) {
@@ -124,7 +140,7 @@
                 }
             };
 
-            const dataUrl = 'data.csv'; // データファイルのURLを指定
+            const dataUrl = 'data.csv';
             fetchData(dataUrl);
         });
     </script>
