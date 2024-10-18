@@ -109,9 +109,8 @@
                                 itemNoHeader.textContent = item['No']; // Noを動的に表示
                                 displayItemDetails(item);
 
-                                // 価格に(税込)を追加
                                 const price = item['価格'].replace('\\', '¥');
-                                itemPriceDiv.textContent = `価格: ${price} (税込)`; // 修正した部分
+                                itemPriceDiv.textContent = `価格: ${price} (税込)`; // (税込)を追加
                             } else {
                                 detailsDiv.innerHTML = '<p>該当するアイテムが見つかりません。</p>';
                             }
@@ -128,13 +127,17 @@
 
             const displayItemDetails = (item) => {
                 for (const key in item) {
-                    if (key !== '掲載' && key !== 'No' && key !== 'おすすめ' && key !== '価格') {
+                    if (key !== '掲載' && key !== 'No' && key !== '爺のひとこと' && key !== '価格') {
                         const detailDiv = document.createElement('div');
                         if (key === '画像リンク' && item[key]) {
                             detailDiv.innerHTML = `<label>リンク:</label> <a href="${item[key]}" target="_blank">詳細</a>`;
                         } else {
                             detailDiv.innerHTML = `<label>${key}:</label> ${item[key]}`;
                         }
+                        detailsDiv.appendChild(detailDiv);
+                    } else if (key === '爺のひとこと') {
+                        const detailDiv = document.createElement('div');
+                        detailDiv.innerHTML = `<label>爺のひとこと:</label> ${item[key]}`; // 新しい項目を表示
                         detailsDiv.appendChild(detailDiv);
                     }
                 }
