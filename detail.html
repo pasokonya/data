@@ -46,20 +46,37 @@
         #back-button:hover {
             background-color: #0056b3;
         }
+        /* 価格とお問い合わせのスタイル */
+        .price {
+            font-size: 1.5em; /* 価格を大きめに */
+            color: red; /* 価格の色を赤に */
+            text-align: center; /* 中央揃え */
+            margin-top: 20px; /* 上のマージン */
+        }
+        .contact-link {
+            color: red; /* リンクの色を赤に */
+            text-align: center; /* 中央揃え */
+            display: block; /* ブロック要素に */
+            margin-top: 10px; /* 上のマージン */
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1 id="item-no"></h1>
         <div id="details" class="item-detail"></div>
+        <div class="price" id="item-price"></div> <!-- 価格を表示するためのdiv -->
+        <a class="contact-link" href="https://lit.link/pasokonya" target="_blank">お問い合わせ： https://lit.link/pasokonya</a> <!-- お問い合わせのリンク -->
         <a id="back-button" href="index.html">戻る</a>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const itemNo = urlParams.get('no');
             const detailsDiv = document.getElementById('details');
             const itemNoHeader = document.getElementById('item-no');
+            const itemPriceDiv = document.getElementById('item-price'); // 価格を表示する要素
 
             const fetchData = async (url) => {
                 try {
@@ -77,6 +94,7 @@
                             if (item) {
                                 itemNoHeader.textContent = item['No']; // Noを動的に表示
                                 displayItemDetails(item);
+                                itemPriceDiv.textContent = `価格: ¥${item['価格']}`; // 価格を表示
                             } else {
                                 detailsDiv.innerHTML = '<p>該当するアイテムが見つかりません。</p>';
                             }
@@ -97,7 +115,7 @@
                     if (key !== '掲載' && key !== 'No' && key !== 'おすすめ' && key !== '価格') {
                         const detailDiv = document.createElement('div');
                         if (key === '画像リンク' && item[key]) {
-                            detailDiv.innerHTML = `<label>${key}:</label> <a href="${item[key]}" target="_blank">${item[key]}</a>`;
+                            detailDiv.innerHTML = `<label>リンク:</label> <a href="${item[key]}" target="_blank">詳細</a>`;
                         } else {
                             detailDiv.innerHTML = `<label>${key}:</label> ${item[key]}`;
                         }
@@ -110,6 +128,5 @@
             fetchData(dataUrl);
         });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 </body>
 </html>

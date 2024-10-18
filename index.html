@@ -101,8 +101,10 @@
                 <tr>
                     <th>No</th>
                     <th>詳細</th>
-                    <th>おすすめ</th>
-                    <th>価格</th>
+                    <th>おすすめ</th> <!-- 順番を変更 -->
+                    <th>総合</th> <!-- 追加 -->
+                    <th>画面</th> <!-- 追加 -->
+                    <th>価格</th> <!-- 順番を変更 -->
                     <th>メーカー</th>
                     <th>型番</th>
                     <th>CPU</th>
@@ -153,8 +155,10 @@
                     tr.innerHTML = `
                         <td>${row['No']}</td>
                         <td><a href="detail.html?no=${row['No']}">詳細</a></td>
-                        <td>${row['おすすめ']}</td>
-                        <td>${row['価格']}</td>
+                        <td>${row['おすすめ']}</td> <!-- 順番を変更 -->
+                        <td>${row['総合']}</td> <!-- 追加 -->
+                        <td>${row['画面']}</td> <!-- 追加 -->
+                        <td>${row['価格']}</td> <!-- 順番を変更 -->
                         <td>${row['メーカー']}</td>
                         <td>${row['型番']}</td>
                         <td>${row['CPU']}</td>
