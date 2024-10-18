@@ -24,10 +24,21 @@
             height: 100vh;
             flex-direction: column;
         }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 50px; /* 画像の幅 */
+            height: auto; /* 高さを自動調整 */
+            margin: 0 10px; /* 左右のマージン */
+        }
         h1 {
             color: #007bff;
             text-align: center;
-            margin: 20px 0;
+            margin: 0; /* マージンをリセット */
         }
         .table-container {
             overflow-x: auto;
@@ -72,11 +83,18 @@
                 font-size: 14px;
                 padding: 8px;
             }
+            .header img {
+                width: 40px; /* 小さい画面用の画像の幅 */
+            }
         }
     </style>
 </head>
 <body>
-    <h1>パソコンやのパソコン</h1>
+    <div class="header">
+        <img src="icon.bmp" alt="Icon Left">
+        <h1>パソコンやのパソコン</h1>
+        <img src="icon.bmp" alt="Icon Right">
+    </div>
     <div class="table-container">
         <table id="data-table">
             <thead>
