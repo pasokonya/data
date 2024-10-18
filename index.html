@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パソコンやのパソコン</title>
-    <link href="styles.css" rel="stylesheet"> <!-- キャッシュバスターを削除 -->
+    <link href="styles.css?t=<?= time() ?>" rel="stylesheet"> <!-- CSSファイルにキャッシュバスター -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+        // 現在のタイムスタンプを取得
+        const cacheBuster = new Date().getTime();
+        const dataUrl = `data.csv?t=${cacheBuster}`; // CSVファイルにキャッシュバスターを追加
+    </script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -96,10 +101,10 @@
                 <tr>
                     <th>No</th>
                     <th>詳細</th>
-                    <th>おすすめ</th> <!-- 順番を変更 -->
-                    <th>総合</th> <!-- 追加 -->
-                    <th>画面</th> <!-- 追加 -->
-                    <th>価格</th> <!-- 順番を変更 -->
+                    <th>おすすめ</th>
+                    <th>総合</th>
+                    <th>画面</th>
+                    <th>価格</th>
                     <th>メーカー</th>
                     <th>型番</th>
                     <th>CPU</th>
@@ -120,7 +125,7 @@
             // データをフェッチしてテーブルに追加
             const fetchData = async (url) => {
                 try {
-                    const response = await fetch(url); // キャッシュバスターを含むURLを使用せず
+                    const response = await fetch(url); // キャッシュバスターを含むURLを使用
                     if (!response.ok) {
                         throw new Error('ネットワーク応答に問題があります: ' + response.statusText);
                     }
@@ -150,10 +155,10 @@
                     tr.innerHTML = `
                         <td>${row['No']}</td>
                         <td><a href="detail.html?no=${row['No']}">詳細</a></td>
-                        <td>${row['おすすめ']}</td> <!-- 順番を変更 -->
-                        <td>${row['総合']}</td> <!-- 追加 -->
-                        <td>${row['画面']}</td> <!-- 追加 -->
-                        <td>${row['価格']}</td> <!-- 順番を変更 -->
+                        <td>${row['おすすめ']}</td>
+                        <td>${row['総合']}</td>
+                        <td>${row['画面']}</td>
+                        <td>${row['価格']}</td>
                         <td>${row['メーカー']}</td>
                         <td>${row['型番']}</td>
                         <td>${row['CPU']}</td>
@@ -164,8 +169,7 @@
                 });
             };
 
-            const dataUrl = 'data.csv'; // データファイルのURLにキャッシュバスターを追加せず
-            fetchData(dataUrl);
+            fetchData(dataUrl); // データのフェッチ
         });
     </script>
 </body>
