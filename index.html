@@ -101,7 +101,7 @@
                 try {
                     // キャッシュバスターを追加
                     const cacheBusterUrl = `${url}?t=${new Date().getTime()}`;
-                    const response = await fetch(cacheBusterUrl);
+                    const response = await fetch(cacheBusterUrl, { cache: "no-store" }); // キャッシュを無視
                     if (!response.ok) {
                         throw new Error('ネットワーク応答に問題があります: ' + response.statusText);
                     }
