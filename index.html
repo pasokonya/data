@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>パソコンやのパソコン</title>
-    <link href="styles.css?t=<?= time() ?>" rel="stylesheet"> <!-- キャッシュバスターを追加 -->
+    <link href="styles.css" rel="stylesheet"> <!-- キャッシュバスターを削除 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-    <script>
-        // キャッシュを無効にするためのスクリプト
-        const cacheBuster = new Date().getTime();
-        const dataUrl = `data.csv?t=${cacheBuster}`; // データファイルのURLにキャッシュバスターを追加
-    </script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -125,7 +120,7 @@
             // データをフェッチしてテーブルに追加
             const fetchData = async (url) => {
                 try {
-                    const response = await fetch(url); // キャッシュバスターを含むURLを使用
+                    const response = await fetch(url); // キャッシュバスターを含むURLを使用せず
                     if (!response.ok) {
                         throw new Error('ネットワーク応答に問題があります: ' + response.statusText);
                     }
@@ -169,7 +164,7 @@
                 });
             };
 
-            const dataUrl = `data.csv?t=${cacheBuster}`; // データファイルのURLにキャッシュバスターを追加
+            const dataUrl = 'data.csv'; // データファイルのURLにキャッシュバスターを追加せず
             fetchData(dataUrl);
         });
     </script>
