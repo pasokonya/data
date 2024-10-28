@@ -32,20 +32,20 @@
             margin-bottom: 20px;
         }
         .header img {
-            width: 50px; /* 画像の幅 */
-            height: auto; /* 高さを自動調整 */
-            margin: 0 10px; /* 左右のマージン */
+            width: 50px;
+            height: auto;
+            margin: 0 10px;
         }
         h1 {
             color: #007bff;
             text-align: center;
-            margin: 0; /* マージンをリセット */
+            margin: 0;
         }
         .table-container {
             overflow-x: auto;
             width: 100%;
-            max-width: 100%; /* 最大幅を100%に設定 */
-            margin: 0 auto; /* センターリング */
+            max-width: 100%;
+            margin: 0 auto;
         }
         table {
             width: 100%;
@@ -57,7 +57,7 @@
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
-            white-space: nowrap; /* 内容が改行されないようにする */
+            white-space: nowrap;
         }
         th {
             background-color: #007bff;
@@ -85,7 +85,7 @@
                 padding: 8px;
             }
             .header img {
-                width: 40px; /* 小さい画面用の画像の幅 */
+                width: 40px;
             }
         }
     </style>
@@ -102,12 +102,12 @@
                 <tr>
                     <th>No</th>
                     <th>詳細</th>
-                    <th>スタイル</th> <!-- スタイル項目を追加 -->
-                    <th>爺のひとこと</th> <!-- おすすめを爺のひとことに変更 -->
-                    <th>総合</th>
-                    <th>画面</th>
-                    <th>価格</th>
-                    <th>メーカー</th>
+                    <th>スタイル</th>
+                    <th>爺のひとこと</th> <!-- 順番を変更 -->
+                    <th>価格</th> <!-- 順番を変更 -->
+                    <th>総合</th> <!-- 順番を変更 -->
+                    <th>画面</th> <!-- 順番を変更 -->
+                    <th>メーカー</th> <!-- 順番を変更 -->
                     <th>型番</th>
                     <th>CPU</th>
                     <th>メモリ</th>
@@ -127,7 +127,7 @@
             // データをフェッチしてテーブルに追加
             const fetchData = async (url) => {
                 try {
-                    const response = await fetch(url); // キャッシュバスターを含むURLを使用
+                    const response = await fetch(url);
                     if (!response.ok) {
                         throw new Error('ネットワーク応答に問題があります: ' + response.statusText);
                     }
@@ -151,18 +151,25 @@
             };
 
             const renderTableRows = (rows) => {
-                tableBody.innerHTML = ''; // テーブルの内容をリセット
+                // 価格の値で昇順ソート
+                rows.sort((a, b) => {
+                    const priceA = parseInt(a['価格'].replace(/[¥,]/g, '')) || 0;
+                    const priceB = parseInt(b['価格'].replace(/[¥,]/g, '')) || 0;
+                    return priceA - priceB;
+                });
+
+                tableBody.innerHTML = '';
                 rows.forEach(row => {
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${row['No']}</td>
                         <td><a href="detail.html?no=${row['No']}">詳細</a></td>
-                        <td>${row['スタイル']}</td> <!-- スタイル項目を追加 -->
-                        <td>${row['爺のひとこと']}</td> <!-- おすすめを爺のひとことに変更 -->
-                        <td>${row['総合']}</td>
-                        <td>${row['画面']}</td>
-                        <td>${row['価格']}</td>
-                        <td>${row['メーカー']}</td>
+                        <td>${row['スタイル']}</td>
+                        <td>${row['爺のひとこと']}</td> <!-- 順番を変更 -->
+                        <td>${row['価格']}</td> <!-- 順番を変更 -->
+                        <td>${row['総合']}</td> <!-- 順番を変更 -->
+                        <td>${row['画面']}</td> <!-- 順番を変更 -->
+                        <td>${row['メーカー']}</td> <!-- 順番を変更 -->
                         <td>${row['型番']}</td>
                         <td>${row['CPU']}</td>
                         <td>${row['メモリ']}</td>
